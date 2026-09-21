@@ -1,10 +1,157 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+/* =========================
+   Страница авторизации
+   ========================= */
+
+.auth-page {
+  min-height: 100vh;
+  background: #fdf5f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+.auth-card {
+  width: 420px;
+  padding: 48px 44px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 28px;
+  box-shadow: 0 18px 50px rgba(160, 120, 120, 0.15);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.auth-decoration {
+  font-size: 42px;
+  margin-bottom: 8px;
+}
+
+.auth-card h1 {
+  margin: 0;
+  color: #59484a;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.auth-subtitle {
+  margin: 12px 0 30px;
+  color: #927f82;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.auth-form {
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #665557;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  border: 1px solid #eadbdd;
+  border-radius: 14px;
+  background: #fffafa;
+  color: #59484a;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.form-group input::placeholder {
+  color: #c2afb2;
+}
+
+.form-group input:focus {
+  border-color: #d9aeb5;
+  box-shadow: 0 0 0 4px rgba(217, 174, 181, 0.15);
+  background: white;
+}
+
+.auth-button {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  background: #d9aeb5;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.auth-button:hover {
+  background: #c998a1;
+  transform: translateY(-1px);
+}
+
+.auth-footer {
+  margin: 26px 0 0;
+  color: #927f82;
+  font-size: 14px;
+}
+
+.auth-footer a {
+  color: #b77f89;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+.auth-error {
+  margin-bottom: 20px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f9e4e4;
+  color: #9b5f67;
+  font-size: 14px;
+}
+
+/* Декоративные цветочки */
+
+.flower {
+  position: absolute;
+  color: #d9aeb5;
+  opacity: 0.45;
+  font-size: 45px;
+  z-index: 1;
+}
+
+.flower-one {
+  top: 12%;
+  left: 12%;
+  transform: rotate(-15deg);
+}
+
+.flower-two {
+  right: 13%;
+  top: 20%;
+  color: #c9b4c5;
+  transform: rotate(20deg);
+}
+
+.flower-three {
+  bottom: 12%;
+  left: 18%;
+  color: #e0b9ae;
+  transform: rotate(12deg);
+}
