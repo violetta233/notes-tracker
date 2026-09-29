@@ -85,15 +85,6 @@
 .auth-button {
   width: 100%;
   margin-top: 8px;
-  padding: 14px;
-  border: none;
-  border-radius: 14px;
-  background: #d9aeb5;
-  color: white;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s ease;
 }
 
 .auth-button:hover {
@@ -558,4 +549,193 @@ main {
 
 .auth-page {
   min-height: calc(100vh - 72px);
+}
+
+/* =========================
+   Новый главный экран
+   ========================= */
+
+.home-page {
+  min-height: calc(100vh - 72px);
+  padding: 60px 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.home-content {
+  width: 100%;
+  max-width: 1050px;
+
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 80px;
+  align-items: center;
+
+  position: relative;
+  z-index: 2;
+}
+
+.home-intro {
+  max-width: 560px;
+}
+
+.home-flower {
+  margin-bottom: 18px;
+  font-size: 48px;
+}
+
+.home-eyebrow {
+  margin: 0 0 12px;
+
+  color: var(--color-primary-dark);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.home-intro h1 {
+  margin: 0 0 20px;
+
+  color: var(--color-text);
+  font-size: 52px;
+  line-height: 1.1;
+  font-weight: 600;
+}
+
+.home-text {
+  max-width: 500px;
+  margin: 0;
+
+  color: var(--color-text-soft);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.home-actions {
+  margin-top: 32px;
+
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+
+/* =========================
+   Превью заметки
+   ========================= */
+
+.note-preview {
+  padding: 30px;
+
+  background: rgba(255, 255, 255, 0.9);
+
+  transform: rotate(2deg);
+
+  transition: 0.25s ease;
+}
+
+.note-preview:hover {
+  transform: rotate(0deg) translateY(-4px);
+}
+
+.note-preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  color: var(--color-text-soft);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.note-preview-header span:last-child {
+  color: var(--color-primary);
+  font-size: 22px;
+}
+
+.note-preview-date {
+  margin-top: 32px;
+
+  color: #b09c9f;
+  font-size: 13px;
+}
+
+.note-preview h2 {
+  margin: 8px 0 14px;
+
+  color: var(--color-text);
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.note-preview p {
+  margin: 0;
+
+  color: var(--color-text-soft);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.note-preview-footer {
+  margin-top: 32px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  color: var(--color-primary);
+}
+
+.note-tag {
+  padding: 7px 12px;
+
+  background: #f8edef;
+  color: #9b777e;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+/* =========================
+   Декоративные элементы
+   ========================= */
+
+.home-decoration {
+  position: absolute;
+
+  color: var(--color-primary);
+  opacity: 0.25;
+
+  font-size: 60px;
+}
+
+.home-decoration-one {
+  top: 12%;
+  left: 7%;
+  transform: rotate(-15deg);
+}
+
+.home-decoration-two {
+  top: 18%;
+  right: 7%;
+
+  color: #c9b4c5;
+  transform: rotate(20deg);
+}
+
+.home-decoration-three {
+  bottom: 10%;
+  left: 16%;
+
+  color: #e0b9ae;
+  transform: rotate(12deg);
 }

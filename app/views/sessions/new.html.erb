@@ -3,7 +3,7 @@
   <div class="flower flower-two">❀</div>
   <div class="flower flower-three">✿</div>
 
-  <div class="auth-card card">
+  <section class="card auth-card">
     <div class="auth-decoration">🌷</div>
 
     <h1>С возвращением ♡</h1>
@@ -19,6 +19,7 @@
     <% end %>
 
     <%= form_with url: login_path, class: "auth-form" do |form| %>
+
       <div class="form-field">
         <%= form.label :email, "Email" %>
 
@@ -36,12 +37,12 @@
       </div>
 
       <%= form.submit "Войти ♡",
-          class: "button auth-submit-button" %>
+          class: "button auth-button" %>
     <% end %>
 
     <p class="auth-footer">
       Ещё нет аккаунта?
       <%= link_to "Зарегистрироваться", register_path %>
     </p>
-  </div>
+  </section>
 </div>

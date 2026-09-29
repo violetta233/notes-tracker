@@ -3,20 +3,20 @@
   <div class="flower flower-two">❀</div>
   <div class="flower flower-three">✿</div>
 
-  <div class="auth-card card">
-    <div class="auth-decoration">🌸</div>
+  <section class="card auth-card">
+    <div class="auth-decoration">🌷</div>
 
-    <h1>Создай свой аккаунт ♡</h1>
+    <h1>Создай аккаунт ♡</h1>
 
     <p class="auth-subtitle">
-      Начни сохранять свои мысли и идеи
+      Создай своё уютное пространство для заметок
     </p>
 
     <% if @user.errors.any? %>
       <div class="error-message">
-        <strong>Проверь введённые данные:</strong>
+        <strong>Проверь данные:</strong>
 
-        <ul class="error-list">
+        <ul>
           <% @user.errors.full_messages.each do |message| %>
             <li><%= message %></li>
           <% end %>
@@ -24,7 +24,10 @@
       </div>
     <% end %>
 
-    <%= form_with model: @user, url: register_path, class: "auth-form" do |form| %>
+    <%= form_with model: @user,
+        url: register_path,
+        class: "auth-form" do |form| %>
+
       <div class="form-field">
         <%= form.label :name, "Имя" %>
 
@@ -58,12 +61,12 @@
       </div>
 
       <%= form.submit "Зарегистрироваться ♡",
-          class: "button auth-submit-button" %>
+          class: "button auth-button" %>
     <% end %>
 
     <p class="auth-footer">
       Уже есть аккаунт?
       <%= link_to "Войти", login_path %>
     </p>
-  </div>
+  </section>
 </div>
