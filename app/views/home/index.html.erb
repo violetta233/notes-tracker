@@ -1,0 +1,82 @@
+<div class="home-page">
+  <div class="home-decoration home-decoration-one">✿</div>
+  <div class="home-decoration home-decoration-two">❀</div>
+  <div class="home-decoration home-decoration-three">✿</div>
+
+  <section class="home-content">
+    <div class="home-intro">
+      <div class="home-flower">🌷</div>
+
+      <% if current_user %>
+        <p class="home-eyebrow">
+          Рада снова тебя видеть
+        </p>
+
+        <h1>
+          Привет, <%= current_user.name %> ♡
+        </h1>
+
+        <p class="home-text">
+          Здесь можно хранить мысли, идеи,
+          планы и всё, что хочется сохранить.
+        </p>
+
+        <div class="home-actions">
+          <%= link_to "Начать", "#", class: "button" %>
+
+          <%= link_to "Выйти",
+              logout_path,
+              data: { turbo_method: :delete },
+              class: "button button-secondary" %>
+        </div>
+      <% else %>
+        <p class="home-eyebrow">
+          Твоё уютное пространство
+        </p>
+
+        <h1>
+          Трекер заметок
+        </h1>
+
+        <p class="home-text">
+          Сохраняй мысли, идеи и планы
+          в одном красивом месте.
+        </p>
+
+        <div class="home-actions">
+          <%= link_to "Войти", login_path, class: "button" %>
+
+          <%= link_to "Создать аккаунт",
+              register_path,
+              class: "button button-secondary" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="note-preview card">
+      <div class="note-preview-header">
+        <span>Моя заметка</span>
+        <span>♡</span>
+      </div>
+
+      <div class="note-preview-date">
+        Сегодня
+      </div>
+
+      <h2>
+        Маленькие идеи
+      </h2>
+
+      <p>
+        Иногда самые простые мысли
+        оказываются самыми важными.
+        Нужно не забыть записать их...
+      </p>
+
+      <div class="note-preview-footer">
+        <span class="note-tag">Личное</span>
+        <span>✿</span>
+      </div>
+    </div>
+  </section>
+</div>
