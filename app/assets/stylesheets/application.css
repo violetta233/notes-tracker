@@ -148,6 +148,10 @@
 }
 
 
+/* =========================
+   Переменные и базовые стили
+   ========================= */
+
 :root {
   --color-background: #fdf5f3;
   --color-surface: #ffffff;
@@ -185,6 +189,8 @@ body {
 a {
   color: inherit;
 }
+
+
 /* =========================
    Общие кнопки
    ========================= */
@@ -285,6 +291,8 @@ a {
   color: var(--color-error-text);
   font-size: 14px;
 }
+
+
 /* =========================
    Общая шапка сайта
    ========================= */
@@ -372,7 +380,7 @@ main {
 
 
 /* =========================
-   Адаптация для телефона
+   Адаптация шапки для телефона
    ========================= */
 
 @media (max-width: 640px) {
@@ -392,167 +400,10 @@ main {
     padding: 9px 12px;
   }
 }
-/* =========================
-   Главная страница
-   ========================= */
 
-.home-page {
-  min-height: calc(100vh - 72px);
-  height: auto;
-  padding: 60px 24px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  position: relative;
-  overflow: hidden;
-}
-
-.home-card {
-  width: 620px;
-  padding: 56px 48px;
-
-  text-align: center;
-
-  position: relative;
-  z-index: 2;
-}
-
-.home-flower {
-  font-size: 46px;
-  margin-bottom: 12px;
-}
-
-.home-card h1 {
-  margin: 0;
-
-  color: var(--color-text);
-  font-size: 34px;
-  font-weight: 600;
-}
-
-.home-card h2 {
-  margin: 16px 0 12px;
-
-  color: #705c5f;
-  font-size: 21px;
-  font-weight: 500;
-}
-
-.home-text {
-  margin: 0 auto 12px;
-
-  color: var(--color-text-soft);
-  font-size: 16px;
-  line-height: 1.6;
-}
-
-.home-description {
-  max-width: 440px;
-  margin: 0 auto;
-
-  color: #aa9699;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.home-actions {
-  margin-top: 30px;
-
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-
-/* Декоративные цветочки */
-
-.home-decoration {
-  position: absolute;
-
-  color: var(--color-primary);
-  opacity: 0.35;
-
-  font-size: 52px;
-}
-
-.home-decoration-one {
-  top: 12%;
-  left: 12%;
-  transform: rotate(-15deg);
-}
-
-.home-decoration-two {
-  top: 20%;
-  right: 12%;
-
-  color: #c9b4c5;
-  transform: rotate(20deg);
-}
-
-.home-decoration-three {
-  bottom: 12%;
-  left: 18%;
-
-  color: #e0b9ae;
-  transform: rotate(12deg);
-}
-
-
-/* Мобильная версия */
-
-@media (max-width: 640px) {
-  .home-page {
-    padding: 40px 16px;
-  }
-
-  .home-card {
-    padding: 40px 24px;
-  }
-
-  .home-card h1 {
-    font-size: 28px;
-  }
-
-  .home-card h2 {
-    font-size: 18px;
-  }
-
-  .home-decoration {
-    font-size: 36px;
-  }
-}
-/* =========================
-   Регистрация
-   ========================= */
-
-.error-list {
-  margin: 10px 0 0;
-  padding-left: 20px;
-  text-align: left;
-}
-
-.error-list li {
-  margin-bottom: 4px;
-}
-
-.auth-submit-button {
-  width: 100%;
-  margin-top: 4px;
-}
-
-
-/* Высота страницы авторизации
-   с учётом общей шапки */
-
-.auth-page {
-  min-height: calc(100vh - 72px);
-}
 
 /* =========================
-   Новый главный экран
+   Главная страница (лендинг)
    ========================= */
 
 .home-page {
@@ -623,6 +474,16 @@ main {
   display: flex;
   gap: 12px;
   align-items: center;
+  flex-wrap: wrap;
+}
+
+.home-description {
+  max-width: 440px;
+  margin: 0 auto;
+
+  color: #aa9699;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 
@@ -706,7 +567,7 @@ main {
 
 
 /* =========================
-   Декоративные элементы
+   Декоративные элементы главной
    ========================= */
 
 .home-decoration {
@@ -738,4 +599,316 @@ main {
 
   color: #e0b9ae;
   transform: rotate(12deg);
+}
+
+
+/* =========================
+   Регистрация — дополнения
+   ========================= */
+
+.error-list {
+  margin: 10px 0 0;
+  padding-left: 20px;
+  text-align: left;
+}
+
+.error-list li {
+  margin-bottom: 4px;
+}
+
+.auth-submit-button {
+  width: 100%;
+  margin-top: 4px;
+}
+
+/* Высота страницы авторизации с учётом шапки */
+.auth-page {
+  min-height: calc(100vh - 72px);
+}
+
+
+/* =========================
+   Дашборд главной страницы
+   ========================= */
+
+.dashboard {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+/* --- Приветственная зона --- */
+
+.dashboard-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+
+  margin-bottom: 48px;
+}
+
+.hero-eyebrow {
+  margin: 0 0 8px;
+
+  color: var(--color-primary-dark);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dashboard-hero h1 {
+  margin: 0 0 10px;
+
+  color: var(--color-text);
+  font-size: 38px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.hero-subtitle {
+  margin: 0;
+
+  color: var(--color-text-soft);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.hero-cta {
+  white-space: nowrap;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* --- Статистика --- */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+
+  margin-bottom: 48px;
+}
+
+.stat-card {
+  padding: 24px 20px;
+
+  text-align: left;
+}
+
+.stat-value {
+  color: var(--color-primary-dark);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  color: var(--color-text-soft);
+  font-size: 14px;
+}
+
+/* --- Последние заметки --- */
+
+.notes-section {
+  margin-top: 8px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  margin: 0;
+
+  color: var(--color-text);
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.section-link {
+  color: var(--color-primary-dark);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.section-link:hover {
+  text-decoration: underline;
+}
+
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.note-card {
+  padding: 24px 26px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  text-align: left;
+
+  transition: 0.25s ease;
+}
+
+.note-card:hover {
+  transform: translateY(-3px);
+}
+
+.note-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.note-icon {
+  color: var(--color-primary);
+  font-size: 20px;
+}
+
+.note-date {
+  color: #b09c9f;
+  font-size: 13px;
+}
+
+.note-title {
+  margin: 0;
+
+  color: var(--color-text);
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.note-excerpt {
+  margin: 0;
+
+  color: var(--color-text-soft);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.note-card-footer {
+  margin-top: auto;
+  padding-top: 16px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.note-flower {
+  color: var(--color-primary);
+  font-size: 16px;
+}
+
+/* --- Пустое состояние --- */
+
+.empty-notes {
+  padding: 56px 32px;
+
+  text-align: center;
+}
+
+.empty-flower {
+  font-size: 44px;
+  margin-bottom: 12px;
+}
+
+.empty-notes h2 {
+  margin: 0 0 12px;
+
+  color: var(--color-text);
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.empty-notes p {
+  max-width: 440px;
+  margin: 0 auto;
+
+  color: var(--color-text-soft);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+
+/* =========================
+   Мобильная адаптация
+   ========================= */
+
+@media (max-width: 760px) {
+  .dashboard {
+    padding: 32px 16px 64px;
+  }
+
+  .dashboard-hero h1 {
+    font-size: 30px;
+  }
+
+  .hero-subtitle {
+    font-size: 15px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 18px 14px;
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+  }
+
+  .notes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-header h2 {
+    font-size: 19px;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-page {
+    padding: 40px 16px;
+  }
+
+  .home-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .home-intro h1 {
+    font-size: 34px;
+  }
+
+  .home-text {
+    font-size: 16px;
+  }
+
+  .home-decoration {
+    font-size: 36px;
+  }
 }

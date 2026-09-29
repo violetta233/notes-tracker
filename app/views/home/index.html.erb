@@ -1,82 +1,111 @@
-<div class="home-page">
-  <div class="home-decoration home-decoration-one">✿</div>
-  <div class="home-decoration home-decoration-two">❀</div>
-  <div class="home-decoration home-decoration-three">✿</div>
+<div class="dashboard">
 
-  <section class="home-content">
-    <div class="home-intro">
-      <div class="home-flower">🌷</div>
+  <%# Приветственная зона %>
+  <section class="dashboard-hero">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Твоё уютное пространство</p>
 
       <% if current_user %>
-        <p class="home-eyebrow">
-          Рада снова тебя видеть
+        <h1>Добро пожаловать, <%= current_user.name %> ♡</h1>
+        <p class="hero-subtitle">
+          Здесь живут твои мысли, идеи и планы.
         </p>
-
-        <h1>
-          Привет, <%= current_user.name %> ♡
-        </h1>
-
-        <p class="home-text">
-          Здесь можно хранить мысли, идеи,
-          планы и всё, что хочется сохранить.
-        </p>
-
-        <div class="home-actions">
-          <%= link_to "Начать", "#", class: "button" %>
-
-          <%= link_to "Выйти",
-              logout_path,
-              data: { turbo_method: :delete },
-              class: "button button-secondary" %>
-        </div>
       <% else %>
-        <p class="home-eyebrow">
-          Твоё уютное пространство
+        <h1>Трекер заметок</h1>
+        <p class="hero-subtitle">
+          Здесь живут твои мысли, идеи и планы.
         </p>
-
-        <h1>
-          Трекер заметок
-        </h1>
-
-        <p class="home-text">
-          Сохраняй мысли, идеи и планы
-          в одном красивом месте.
-        </p>
-
-        <div class="home-actions">
-          <%= link_to "Войти", login_path, class: "button" %>
-
-          <%= link_to "Создать аккаунт",
-              register_path,
-              class: "button button-secondary" %>
-        </div>
       <% end %>
     </div>
 
-    <div class="note-preview card">
-      <div class="note-preview-header">
-        <span>Моя заметка</span>
-        <span>♡</span>
+    <% if current_user %>
+      <%= link_to "+ Новая заметка", "#", class: "button hero-cta" %>
+    <% else %>
+      <div class="hero-actions">
+        <%= link_to "Войти", login_path, class: "button" %>
+        <%= link_to "Создать аккаунт", register_path,
+            class: "button button-secondary" %>
       </div>
-
-      <div class="note-preview-date">
-        Сегодня
-      </div>
-
-      <h2>
-        Маленькие идеи
-      </h2>
-
-      <p>
-        Иногда самые простые мысли
-        оказываются самыми важными.
-        Нужно не забыть записать их...
-      </p>
-
-      <div class="note-preview-footer">
-        <span class="note-tag">Личное</span>
-        <span>✿</span>
-      </div>
-    </div>
+    <% end %>
   </section>
+
+  <% if current_user %>
+    <%# Статистика %>
+    <section class="stats-grid">
+      <div class="stat-card card">
+        <div class="stat-value">12</div>
+        <div class="stat-label">заметок</div>
+      </div>
+
+      <div class="stat-card card">
+        <div class="stat-value">5</div>
+        <div class="stat-label">личных</div>
+      </div>
+
+      <div class="stat-card card">
+        <div class="stat-value">3</div>
+        <div class="stat-label">идей</div>
+      </div>
+    </section>
+
+    <%# Последние заметки %>
+    <section class="notes-section">
+      <div class="section-header">
+        <h2>Последние заметки</h2>
+        <%= link_to "Все заметки →", "#", class: "section-link" %>
+      </div>
+
+      <div class="notes-grid">
+        <article class="note-card card">
+          <div class="note-card-header">
+            <span class="note-icon">✿</span>
+            <span class="note-date">Сегодня</span>
+          </div>
+
+          <h3 class="note-title">Идеи для проекта</h3>
+
+          <p class="note-excerpt">
+            Нужно добавить сортировку по дате
+            и красивый фильтр по тегам...
+          </p>
+
+          <div class="note-card-footer">
+            <span class="note-tag">Проект</span>
+            <span class="note-flower">✿</span>
+          </div>
+        </article>
+
+        <article class="note-card card">
+          <div class="note-card-header">
+            <span class="note-icon">♡</span>
+            <span class="note-date">Вчера</span>
+          </div>
+
+          <h3 class="note-title">Личные планы</h3>
+
+          <p class="note-excerpt">
+            Не забыть записаться на курсы
+            и купить билеты на выходные...
+          </p>
+
+          <div class="note-card-footer">
+            <span class="note-tag">Личное</span>
+            <span class="note-flower">✿</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  <% else %>
+    <%# Пустое состояние — неавторизованный пользователь %>
+    <section class="empty-notes card">
+      <div class="empty-flower">🌷</div>
+      <h2>У тебя пока нет заметок</h2>
+      <p>
+        Войди или создай аккаунт, чтобы начать
+        сохранять свои мысли в одном уютном месте.
+      </p>
+    </section>
+  <% end %>
+
 </div>
