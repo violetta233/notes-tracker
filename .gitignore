@@ -58,3 +58,10 @@ build-iPhoneSimulator/
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 
+# Runtime files
+/log/*
+!/log/.keep
+/storage/*.sqlite3*
+!/storage/.keep
+/tmp/*
+!/tmp/.keep
