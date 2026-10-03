@@ -7,25 +7,17 @@
 
       <% if current_user %>
         <h1>Добро пожаловать, <%= current_user.name %> ♡</h1>
-        <p class="hero-subtitle">
-          Здесь живут твои мысли, идеи и планы.
-        </p>
       <% else %>
         <h1>Трекер заметок</h1>
-        <p class="hero-subtitle">
-          Здесь живут твои мысли, идеи и планы.
-        </p>
       <% end %>
+
+      <p class="hero-subtitle">
+        Здесь живут твои мысли, идеи и планы.
+      </p>
     </div>
 
     <% if current_user %>
       <%= link_to "+ Новая заметка", "#", class: "button hero-cta" %>
-    <% else %>
-      <div class="hero-actions">
-        <%= link_to "Войти", login_path, class: "button" %>
-        <%= link_to "Создать аккаунт", register_path,
-            class: "button button-secondary" %>
-      </div>
     <% end %>
   </section>
 
