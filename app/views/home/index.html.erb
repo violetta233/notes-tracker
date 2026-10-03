@@ -17,7 +17,10 @@
     </div>
 
     <% if current_user %>
-      <%= link_to "+ Новая заметка", "#", class: "button hero-cta" %>
+     <div class="hero-actions">
+      <%= link_to "+ Новая заметка", "#", class: "button" %>
+      <%= link_to "+ Новая привычка", new_habit_path, class: "button button-secondary" %>
+    </div>
     <% end %>
   </section>
 

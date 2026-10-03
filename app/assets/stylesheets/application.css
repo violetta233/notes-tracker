@@ -912,3 +912,31 @@ main {
     font-size: 36px;
   }
 }
+/* =========================
+   Стили для select в формах
+   ========================= */
+
+.form-field select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
+  background: var(--color-surface-soft);
+  color: var(--color-text);
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%23927f82' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 12px;
+}
+
+.form-field select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(217, 174, 181, 0.15);
+  background-color: white;
+}

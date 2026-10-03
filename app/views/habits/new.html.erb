@@ -1,0 +1,42 @@
+<div class="auth-page">
+  <div class="flower flower-one">✿</div>
+  <div class="flower flower-two">❀</div>
+  <div class="flower flower-three">✿</div>
+
+  <section class="card auth-card">
+    <div class="auth-decoration">🌱</div>
+
+    <h1>Новая привычка</h1>
+
+    <p class="auth-subtitle">
+      Создай полезную привычку и следи за прогрессом
+    </p>
+
+    <%= form_with url: habits_path, class: "auth-form" do |form| %>
+      <div class="form-field">
+        <%= form.label :name, "Название" %>
+        <%= form.text_field :name,
+            placeholder: "Например: Пить воду" %>
+      </div>
+
+      <div class="form-field">
+        <%= form.label :frequency, "Периодичность" %>
+        <%= form.select :frequency,
+            ["Каждый день", "Через день", "Раз в неделю"] %>
+      </div>
+
+      <div class="form-field">
+        <%= form.label :description, "Описание" %>
+        <%= form.text_area :description,
+            placeholder: "Зачем тебе эта привычка?" %>
+      </div>
+
+      <%= form.submit "Создать привычку ♡",
+          class: "button auth-button" %>
+    <% end %>
+
+    <p class="auth-footer">
+      <%= link_to "← Назад", root_path %>
+    </p>
+  </section>
+</div>
