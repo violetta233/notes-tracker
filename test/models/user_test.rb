@@ -1,43 +1,57 @@
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
-  test "valid user" do
-    user = User.new(
+  def setup
+    @user = User.new(
       name: "Violetta",
-      email: "violetta@example.com",
-      password: "password123",
-      password_confirmation: "password123"
+      email: "test@example.com",
+      password: "123456",
+      password_confirmation: "123456"
     )
-
-    assert user.valid?
   end
 
-  test "password is stored as a digest" do
-    user = User.create!(
-      name: "Violetta",
-      email: "password@example.com",
-      password: "password123",
-      password_confirmation: "password123"
-    )
-
-    assert_not_equal "password123", user.password_digest
-    assert user.authenticate("password123")
+  test "valid user saves" do
+    assert @user.save
   end
 
-  test "email must be unique" do
-    User.create!(
-      name: "First User",
-      email: "same@example.com",
-      password: "password123"
-    )
+  test "invalid without name" do
+    @user.name = nil
+    assert_not @user.save
+    assert_includes @user.errors[:name], "can't be blank"
+  end
 
-    duplicate_user = User.new(
-      name: "Second User",
-      email: "same@example.com",
-      password: "password456"
-    )
+  test "invalid without email" do
+    @user.email = nil
+    assert_not @user.save
+  end
 
-    assert_not duplicate_user.valid?
-    assert_includes duplicate_user.errors[:email], "has already been taken"
+  test "invalid with duplicate email" do
+  @user.save
+  duplicate = User.new(
+    name: "Another",
+    email: @user.email,
+    password: "123456"
+  )
+  assert_not duplicate.save
+  end
+
+  test "invalid with short password" do
+    @user.password = "123"
+    @user.password_confirmation = "123"
+    assert_not @user.save
+  end
+
+  test "authenticates with correct password" do
+    @user.save
+    assert @user.authenticate("123456")
+  end
+
+  test "does not authenticate with wrong password" do
+    @user.save
+    assert_not @user.authenticate("wrong")
+  end
+
+  test "responds to notes" do
+    assert_respond_to @user, :notes
   end
 end
