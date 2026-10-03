@@ -1,0 +1,43 @@
+<div class="auth-page">
+  <div class="flower flower-one">✿</div>
+  <div class="flower flower-two">❀</div>
+  <div class="flower flower-three">✿</div>
+
+  <section class="card auth-card">
+    <div class="auth-decoration">📝</div>
+
+    <h1>Новая заметка</h1>
+
+    <p class="auth-subtitle">
+      Запиши мысль, идею или план — пока свежо в голове
+    </p>
+
+    <%= form_with url: notes_path, class: "auth-form" do |form| %>
+      <div class="form-field">
+        <%= form.label :title, "Заголовок" %>
+        <%= form.text_field :title,
+            placeholder: "Например: Идеи для проекта" %>
+      </div>
+
+      <div class="form-field">
+        <%= form.label :tag, "Категория" %>
+        <%= form.select :tag,
+            ["Личное", "Проект", "Идеи"],
+            { include_blank: "Без категории" } %>
+      </div>
+
+      <div class="form-field">
+        <%= form.label :body, "Текст заметки" %>
+        <%= form.text_area :body,
+            placeholder: "Начни писать..." %>
+      </div>
+
+      <%= form.submit "Сохранить заметку ♡",
+          class: "button auth-button" %>
+    <% end %>
+
+    <p class="auth-footer">
+      <%= link_to "← Назад", root_path %>
+    </p>
+  </section>
+</div>
