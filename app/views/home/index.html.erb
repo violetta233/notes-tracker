@@ -17,10 +17,10 @@
     </div>
 
     <% if current_user %>
-     <div class="hero-actions">
-      <%= link_to "+ Новая заметка", new_note_path, class: "button" %>
-      <%= link_to "+ Новая привычка", new_habit_path, class: "button button-secondary" %>
-    </div>
+      <div class="hero-actions">
+        <%= link_to "+ Новая заметка", new_note_path, class: "button" %>
+        <%= link_to "+ Новая привычка", new_habit_path, class: "button button-secondary" %>
+      </div>
     <% end %>
   </section>
 
@@ -28,17 +28,17 @@
     <%# Статистика %>
     <section class="stats-grid">
       <div class="stat-card card">
-        <div class="stat-value">12</div>
+        <div class="stat-value"><%= current_user.notes.count %></div>
         <div class="stat-label">заметок</div>
       </div>
 
       <div class="stat-card card">
-        <div class="stat-value">5</div>
-        <div class="stat-label">личных</div>
+        <div class="stat-value"><%= current_user.habits.count %></div>
+        <div class="stat-label">привычек</div>
       </div>
 
       <div class="stat-card card">
-        <div class="stat-value">3</div>
+        <div class="stat-value"><%= current_user.notes.where(tag: "Идеи").count %></div>
         <div class="stat-label">идей</div>
       </div>
     </section>
@@ -50,52 +50,76 @@
         <%= link_to "Все заметки →", "#", class: "section-link" %>
       </div>
 
-      <div class="notes-grid">
-        <article class="note-card card">
-          <div class="note-card-header">
-            <span class="note-icon">✿</span>
-            <span class="note-date">Сегодня</span>
-          </div>
+      <% if @notes && @notes.any? %>
+        <div class="notes-grid">
+          <% @notes.each do |note| %>
+            <article class="note-card card">
+              <div class="note-card-header">
+                <span class="note-icon">✿</span>
+                <span class="note-date"><%= note.created_at.strftime("%d.%m.%Y") %></span>
+              </div>
 
-          <h3 class="note-title">Идеи для проекта</h3>
+              <h3 class="note-title"><%= note.title %></h3>
 
-          <p class="note-excerpt">
-            Нужно добавить сортировку по дате
-            и красивый фильтр по тегам...
-          </p>
+              <p class="note-excerpt">
+                <%= truncate(note.body, length: 100) %>
+              </p>
 
-          <div class="note-card-footer">
-            <span class="note-tag">Проект</span>
-            <span class="note-flower">✿</span>
-          </div>
-        </article>
+              <div class="note-card-footer">
+                <span class="note-tag"><%= note.tag.presence || "Без тега" %></span>
+                <span class="note-flower">✿</span>
+              </div>
+            </article>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="empty-notes card" style="padding: 40px;">
+          <p style="margin: 0; color: var(--color-text-soft);">У тебя пока нет заметок. Создай первую!</p>
+        </div>
+      <% end %>
+    </section>
 
-        <article class="note-card card">
-          <div class="note-card-header">
-            <span class="note-icon">♡</span>
-            <span class="note-date">Вчера</span>
-          </div>
-
-          <h3 class="note-title">Личные планы</h3>
-
-          <p class="note-excerpt">
-            Не забыть записаться на курсы
-            и купить билеты на выходные...
-          </p>
-
-          <div class="note-card-footer">
-            <span class="note-tag">Личное</span>
-            <span class="note-flower">✿</span>
-          </div>
-        </article>
+    <%# Последние привычки %>
+    <section class="notes-section" style="margin-top: 48px;">
+      <div class="section-header">
+        <h2>Мои привычки</h2>
+        <%= link_to "Все привычки →", "#", class: "section-link" %>
       </div>
+
+      <% if @habits && @habits.any? %>
+        <div class="notes-grid">
+          <% @habits.each do |habit| %>
+            <article class="note-card card">
+              <div class="note-card-header">
+                <span class="note-icon">🌱</span>
+                <span class="note-date"><%= habit.frequency.presence || "Каждый день" %></span>
+              </div>
+
+              <h3 class="note-title"><%= habit.name %></h3>
+
+              <p class="note-excerpt">
+                <%= truncate(habit.description, length: 100) %>
+              </p>
+
+              <div class="note-card-footer">
+                <span class="note-tag">Привычка</span>
+                <span class="note-flower">🌱</span>
+              </div>
+            </article>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="empty-notes card" style="padding: 40px;">
+          <p style="margin: 0; color: var(--color-text-soft);">У тебя пока нет привычек. Начни с одной!</p>
+        </div>
+      <% end %>
     </section>
 
   <% else %>
     <%# Пустое состояние — неавторизованный пользователь %>
     <section class="empty-notes card">
       <div class="empty-flower">🌷</div>
-      <h2>У тебя пока нет заметок</h2>
+      <h2>Добро пожаловать в Трекер!</h2>
       <p>
         Войди или создай аккаунт, чтобы начать
         сохранять свои мысли в одном уютном месте.

@@ -12,7 +12,18 @@
       Запиши мысль, идею или план — пока свежо в голове
     </p>
 
-    <%= form_with url: notes_path, class: "auth-form" do |form| %>
+      <% if @note.errors.any? %>
+      <div class="error-message">
+        <strong>Проверь данные:</strong>
+        <ul>
+          <% @note.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_with model: @note, class: "auth-form" do |form| %>
       <div class="form-field">
         <%= form.label :title, "Заголовок" %>
         <%= form.text_field :title,
