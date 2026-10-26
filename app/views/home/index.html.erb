@@ -47,32 +47,31 @@
     <section class="notes-section">
       <div class="section-header">
         <h2>Последние заметки</h2>
-        <%= link_to "Все заметки →", "#", class: "section-link" %>
+        <%= link_to "Все заметки →", notes_path, class: "section-link" %>
       </div>
 
       <% if @notes && @notes.any? %>
         <div class="notes-grid">
           <% @notes.each do |note| %>
-            <article class="note-card card">
-              <div class="note-card-header">
-                <span class="note-icon">✿</span>
-                <span class="note-date"><%= note.created_at.strftime("%d.%m.%Y") %></span>
-              </div>
-
-              <h3 class="note-title"><%= note.title %></h3>
-
-              <p class="note-excerpt">
-                <%= truncate(note.body, length: 100) %>
-              </p>
-
-              <div class="note-card-footer" style="display: flex; justify-content: space-between; align-items: center;">
-                <span class="note-tag"><%= note.tag.presence || "Без тега" %></span>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                  <span class="note-flower">✿</span>
-                  <%= button_to "🗑", note_path(note), method: :delete, class: "delete-btn", form: { data: { turbo_confirm: "Удалить заметку?" } } %>
+            <details class="note-card card expandable-card">
+              <summary class="note-summary">
+                <div class="note-card-header">
+                  <span class="note-icon">✿</span>
+                  <span class="note-date"><%= note.created_at.strftime("%d.%m.%Y") %></span>
+                </div>
+                <h3 class="note-title"><%= note.title %></h3>
+              </summary>
+              
+              <div class="note-expanded-content">
+                <p class="note-excerpt-full"><%= note.body %></p>
+                <div class="note-card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
+                  <span class="note-tag"><%= note.tag.presence || "Без тега" %></span>
+                  <div style="display: flex; gap: 10px; align-items: center;">
+                    <%= button_to "🗑", note_path(note), method: :delete, class: "delete-btn", form: { data: { turbo_confirm: "Удалить заметку?" } } %>
+                  </div>
                 </div>
               </div>
-            </article>
+            </details>
           <% end %>
         </div>
       <% else %>
@@ -86,32 +85,31 @@
     <section class="notes-section" style="margin-top: 48px;">
       <div class="section-header">
         <h2>Мои привычки</h2>
-        <%= link_to "Все привычки →", "#", class: "section-link" %>
+        <%= link_to "Все привычки →", habits_path, class: "section-link" %>
       </div>
 
       <% if @habits && @habits.any? %>
         <div class="notes-grid">
           <% @habits.each do |habit| %>
-            <article class="note-card card">
-              <div class="note-card-header">
-                <span class="note-icon">🌱</span>
-                <span class="note-date"><%= habit.frequency.presence || "Каждый день" %></span>
-              </div>
-
-              <h3 class="note-title"><%= habit.name %></h3>
-
-              <p class="note-excerpt">
-                <%= truncate(habit.description, length: 100) %>
-              </p>
-
-              <div class="note-card-footer" style="display: flex; justify-content: space-between; align-items: center;">
-                <span class="note-tag">Привычка</span>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                  <span class="note-flower">🌱</span>
-                  <%= button_to "🗑", habit_path(habit), method: :delete, class: "delete-btn", form: { data: { turbo_confirm: "Удалить привычку?" } } %>
+            <details class="note-card card expandable-card">
+              <summary class="note-summary">
+                <div class="note-card-header">
+                  <span class="note-icon">🌱</span>
+                  <span class="note-date"><%= habit.frequency.presence || "Каждый день" %></span>
+                </div>
+                <h3 class="note-title"><%= habit.name %></h3>
+              </summary>
+              
+              <div class="note-expanded-content">
+                <p class="note-excerpt-full"><%= habit.description.presence || "Описание пока не добавлено." %></p>
+                <div class="note-card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
+                  <span class="note-tag">Привычка</span>
+                  <div style="display: flex; gap: 10px; align-items: center;">
+                    <%= button_to "🗑", habit_path(habit), method: :delete, class: "delete-btn", form: { data: { turbo_confirm: "Удалить привычку?" } } %>
+                  </div>
                 </div>
               </div>
-            </article>
+            </details>
           <% end %>
         </div>
       <% else %>

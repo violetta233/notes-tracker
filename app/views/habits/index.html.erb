@@ -1,0 +1,38 @@
+<div class="dashboard">
+  <div class="section-header" style="margin-bottom: 30px;">
+    <h1 style="margin: 0; font-size: 32px; color: var(--color-text);">Все привычки</h1>
+    <%= link_to "+ Добавить", new_habit_path, class: "button" %>
+  </div>
+
+  <% if @habits.any? %>
+    <div class="notes-grid">
+      <% @habits.each do |habit| %>
+        <details class="note-card card expandable-card">
+          <summary class="note-summary">
+            <div class="note-card-header">
+              <span class="note-icon">🌱</span>
+              <span class="note-date"><%= habit.frequency.presence || "Каждый день" %></span>
+            </div>
+            <h3 class="note-title"><%= habit.name %></h3>
+          </summary>
+          
+          <div class="note-expanded-content">
+            <p class="note-excerpt-full"><%= habit.description.presence || "Описание пока не добавлено." %></p>
+            <div class="note-card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
+              <span class="note-tag">Привычка</span>
+              <div style="display: flex; gap: 10px; align-items: center;">
+                <%= button_to "🗑", habit_path(habit), method: :delete, class: "delete-btn", form: { data: { turbo_confirm: "Удалить привычку?" } } %>
+              </div>
+            </div>
+          </div>
+        </details>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="empty-notes card" style="padding: 40px; text-align: center;">
+      <p style="margin: 0; color: var(--color-text-soft);">У тебя пока нет привычек.</p>
+    </div>
+  <% end %>
+
+  <p style="margin-top: 30px;"><%= link_to "← На главную", root_path, style: "color: var(--color-primary-dark); font-weight: bold; text-decoration: none;" %></p>
+</div>

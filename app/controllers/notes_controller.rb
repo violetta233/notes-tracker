@@ -1,4 +1,8 @@
 class NotesController < ApplicationController
+  def index
+    @notes = current_user.notes.order(created_at: :desc)
+  end
+
   def new
     @note = Note.new
   end

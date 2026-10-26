@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   root "home#index"
 
-  get "/register", to: "registrations#new"
+  get  "/register", to: "registrations#new"
   post "/register", to: "registrations#create"
 
-  get "/login", to: "sessions#new"
-  post "/login", to: "sessions#create"
+  get    "/login",  to: "sessions#new"
+  post   "/login",  to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
-resources :habits, only: [ :new, :create, :destroy ]
-resources :notes,  only: [ :new, :create, :destroy ]
+  resources :habits, only: [ :index, :new, :create, :destroy ]
+  resources :notes,  only: [ :index, :new, :create, :destroy ]
 end

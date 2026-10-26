@@ -1000,3 +1000,51 @@ main {
 .dialog-actions .button {
   padding: 10px 20px;
 }
+
+/* =========================
+   Раскрывающиеся карточки (Accordion)
+   ========================= */
+
+.expandable-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.expandable-card[open] {
+  grid-row: span 2; /* Карточка занимает больше места, если открыта */
+}
+
+/* Убираем стандартную стрелку браузера */
+.note-summary {
+  list-style: none;
+  outline: none;
+}
+.note-summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Добавляем свою стрелочку или индикатор, если нужно */
+.note-summary:hover .note-title {
+  color: var(--color-primary-dark);
+}
+
+/* Стили для раскрытого контента */
+.note-expanded-content {
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+  margin-top: 12px;
+  animation: fadeIn 0.3s ease;
+}
+
+.note-excerpt-full {
+  margin: 0;
+  color: var(--color-text-soft);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap; /* Чтобы сохранялись переносы строк из формы */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

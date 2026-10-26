@@ -1,0 +1,38 @@
+<div class="dashboard">
+  <div class="section-header" style="margin-bottom: 30px;">
+    <h1 style="margin: 0; font-size: 32px; color: var(--color-text);">Все заметки</h1>
+    <%= link_to "+ Добавить", new_note_path, class: "button" %>
+  </div>
+
+  <% if @notes.any? %>
+    <div class="notes-grid">
+      <% @notes.each do |note| %>
+        <details class="note-card card expandable-card">
+          <summary class="note-summary">
+            <div class="note-card-header">
+              <span class="note-icon">✿</span>
+              <span class="note-date"><%= note.created_at.strftime("%d.%m.%Y") %></span>
+            </div>
+            <h3 class="note-title"><%= note.title %></h3>
+          </summary>
+          
+          <div class="note-expanded-content">
+            <p class="note-excerpt-full"><%= note.body %></p>
+            <div class="note-card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
+              <span class="note-tag"><%= note.tag.presence || "Без тега" %></span>
+              <div style="display: flex; gap: 10px; align-items: center;">
+                <%= button_to "🗑", note_path(note), method: :delete, class: "delete-btn", form: { data: { turbo_confirm: "Удалить заметку?" } } %>
+              </div>
+            </div>
+          </div>
+        </details>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="empty-notes card" style="padding: 40px; text-align: center;">
+      <p style="margin: 0; color: var(--color-text-soft);">У тебя пока нет заметок.</p>
+    </div>
+  <% end %>
+
+  <p style="margin-top: 30px;"><%= link_to "← На главную", root_path, style: "color: var(--color-primary-dark); font-weight: bold; text-decoration: none;" %></p>
+</div>
