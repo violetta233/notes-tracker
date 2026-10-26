@@ -940,3 +940,63 @@ main {
   box-shadow: 0 0 0 4px rgba(217, 174, 181, 0.15);
   background-color: white;
 }
+
+/* Кнопка удаления на карточках */
+.delete-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  opacity: 0.5;
+  transition: 0.2s ease;
+  padding: 0;
+  line-height: 1;
+}
+
+.delete-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* =========================
+   Кастомное окно подтверждения
+   ========================= */
+
+.custom-dialog {
+  border: none;
+  border-radius: var(--radius-card);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  background: var(--color-surface);
+  width: 90%;
+  max-width: 400px;
+  margin: auto;
+}
+
+/* Затемнение фона */
+.custom-dialog::backdrop {
+  background: rgba(89, 72, 74, 0.4); /* Цвет вашего --color-text с прозрачностью */
+  backdrop-filter: blur(4px);
+}
+
+.dialog-content {
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.dialog-content h2 {
+  margin: 0 0 24px;
+  font-size: 20px;
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.dialog-actions .button {
+  padding: 10px 20px;
+}

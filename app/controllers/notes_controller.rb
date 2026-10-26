@@ -8,9 +8,14 @@ class NotesController < ApplicationController
     if @note.save
       redirect_to root_path, notice: "Заметка создана!"
     else
-      # Если не сохранилось, показываем форму заново с ошибками
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @note = current_user.notes.find(params[:id])
+    @note.destroy
+    redirect_to root_path, notice: "Заметка удалена!"
   end
 
   private

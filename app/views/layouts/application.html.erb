@@ -44,5 +44,51 @@
     <main>
       <%= yield %>
     </main>
+
+    <!-- КАСТОМНОЕ ОКНО ПОДТВЕРЖДЕНИЯ -->
+    <dialog id="confirm-dialog" class="custom-dialog">
+      <div class="dialog-content">
+        <h2 id="dialog-message">Вы уверены?</h2>
+        <div class="dialog-actions">
+          <button id="dialog-cancel" class="button button-secondary">Отмена</button>
+          <button id="dialog-confirm" class="button">Удалить</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- СКРИПТ ДЛЯ ОКНА -->
+    <script>
+      document.addEventListener("turbo:load", () => {
+        const dialog = document.getElementById("confirm-dialog");
+        const message = document.getElementById("dialog-message");
+        const btnConfirm = document.getElementById("dialog-confirm");
+        const btnCancel = document.getElementById("dialog-cancel");
+
+        // Перехватываем отправку форм с data-turbo-confirm
+        document.addEventListener("submit", (e) => {
+          const confirmMessage = e.target.dataset.turboConfirm;
+          if (confirmMessage) {
+            e.preventDefault(); // Останавливаем отправку
+            message.textContent = confirmMessage;
+            dialog.showModal(); // Показываем окно
+
+            // Если нажали "Удалить"
+            btnConfirm.onclick = () => {
+              dialog.close();
+              e.target.submit(); // Отправляем форму
+            };
+          }
+        });
+
+        // Если нажали "Отмена" или кликнули мимо окна
+        btnCancel.onclick = () => dialog.close();
+        dialog.addEventListener("click", (e) => {
+          const rect = dialog.getBoundingClientRect();
+          if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
+            dialog.close();
+          }
+        });
+      });
+    </script>
   </body>
 </html>

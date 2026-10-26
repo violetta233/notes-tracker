@@ -65,9 +65,12 @@
                 <%= truncate(note.body, length: 100) %>
               </p>
 
-              <div class="note-card-footer">
+              <div class="note-card-footer" style="display: flex; justify-content: space-between; align-items: center;">
                 <span class="note-tag"><%= note.tag.presence || "Без тега" %></span>
-                <span class="note-flower">✿</span>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                  <span class="note-flower">✿</span>
+                  <%= button_to "🗑", note_path(note), method: :delete, class: "delete-btn", form: { data: { turbo_confirm: "Удалить заметку?" } } %>
+                </div>
               </div>
             </article>
           <% end %>
@@ -101,9 +104,12 @@
                 <%= truncate(habit.description, length: 100) %>
               </p>
 
-              <div class="note-card-footer">
+              <div class="note-card-footer" style="display: flex; justify-content: space-between; align-items: center;">
                 <span class="note-tag">Привычка</span>
-                <span class="note-flower">🌱</span>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                  <span class="note-flower">🌱</span>
+                  <%= button_to "🗑", habit_path(habit), method: :delete, class: "delete-btn", form: { data: { turbo_confirm: "Удалить привычку?" } } %>
+                </div>
               </div>
             </article>
           <% end %>

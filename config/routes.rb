@@ -8,6 +8,6 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
-  resources :habits, only: [:new, :create]
-  resources :notes, only: [:new, :create]
+resources :habits, only: [ :new, :create, :destroy ]
+resources :notes,  only: [ :new, :create, :destroy ]
 end
