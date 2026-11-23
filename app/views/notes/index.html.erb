@@ -7,25 +7,41 @@
   <% if @notes.any? %>
     <div class="notes-grid">
       <% @notes.each do |note| %>
-        <details class="note-card card expandable-card">
-          <summary class="note-summary">
-            <div class="note-card-header">
-              <span class="note-icon">✿</span>
-              <span class="note-date"><%= note.created_at.strftime("%d.%m.%Y") %></span>
-            </div>
-            <h3 class="note-title"><%= note.title %></h3>
-          </summary>
+        <div class="note-card card" style="display: flex; flex-direction: column; gap: 10px; padding: 20px;">
           
-          <div class="note-expanded-content">
-            <p class="note-excerpt-full"><%= note.body %></p>
-            <div class="note-card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
-              <span class="note-tag"><%= note.tag.presence || "Без тега" %></span>
-              <div style="display: flex; gap: 10px; align-items: center;">
-                <%= button_to "🗑", note_path(note), method: :delete, class: "delete-btn", form: { data: { turbo_confirm: "Удалить заметку?" } } %>
-              </div>
+          <div class="note-card-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: 10px; margin-bottom: 10px;">
+            <span class="note-date" style="color: #b09c9f; font-size: 13px;"><%= note.created_at.strftime("%d.%m.%Y") %></span>
+            
+            <div style="display: flex; gap: 6px; align-items: center;">
+              <!-- Редактировать -->
+              <%= link_to "✏️", edit_note_path(note), class: "button button-secondary", style: "padding: 4px 8px; font-size: 12px; text-decoration: none;" %>
+
+              <!-- Поделиться -->
+              <button type="button" class="button share-btn" 
+                      data-url="<%= public_note_url(note.share_token) %>" 
+                      data-title="<%= note.title %>"
+                      style="padding: 4px 10px; font-size: 12px; border: none; cursor: pointer;">
+                Поделиться
+              </button>
+
+              <!-- Удалить -->
+              <%= button_to "🗑", note_path(note), method: :delete, class: "delete-btn", form: { data: { turbo_confirm: "Удалить заметку?" }, style: "display: inline;" }, style: "background: none; border: none; cursor: pointer; font-size: 16px;" %>
             </div>
           </div>
-        </details>
+
+          <% if note.source_note_id.present? && note.source_note %>
+            <div style="font-size: 11px; color: var(--color-primary-dark); font-weight: bold; margin-bottom: -5px;">
+              Совместно с: <%= note.source_note.user.name %>
+            </div>
+          <% end %>
+
+          <h3 class="note-title" style="margin: 0;"><%= note.title %></h3>
+          <p class="note-excerpt-full" style="margin: 0; color: var(--color-text-soft); white-space: pre-line;"><%= note.body %></p>
+          
+          <div class="note-tag" style="margin-top: auto; align-self: flex-start; background: #f8edef; color: #9b777e; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600;">
+            <%= note.tag.presence || "Без тега" %>
+          </div>
+        </div>
       <% end %>
     </div>
   <% else %>

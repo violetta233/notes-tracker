@@ -1,0 +1,83 @@
+<div class="home-page">
+  <div class="home-decoration home-decoration-one">✿</div>
+  <div class="home-decoration home-decoration-two">❀</div>
+  <div class="home-decoration home-decoration-three">✿</div>
+
+  <section class="card auth-card" style="width: 640px; max-width: 100%; text-align: left; padding-bottom: 24px;">
+    
+    <!-- Приписка сверху: с кем поделились -->
+    <% if @shared_with_name %>
+      <div style="background: #f8edef; border-radius: 12px; padding: 12px 16px; margin-bottom: 20px; font-size: 14px; color: #9b777e;">
+        <strong>Совместно с:</strong> <%= @shared_with_name %>
+      </div>
+    <% end %>
+
+    <div class="note-preview-header">
+      <span>Публичная заметка</span>
+      <span>♡</span>
+    </div>
+
+    <div class="note-preview-date" style="margin-top: 16px;">
+      <%= @note.created_at.strftime("%d.%m.%Y") %>
+    </div>
+
+    <% if current_user %>
+      <% is_author = @note.user == current_user %>
+      
+      <%= form_with model: @note, url: public_note_path(@note.share_token), method: :patch, class: "auth-form" do |form| %>
+        <div class="form-field">
+          <%= form.label :title, "Заголовок" %>
+          <%= form.text_field :title %>
+        </div>
+
+        <div class="form-field">
+          <%= form.label :tag, "Категория" %>
+          <%= form.select :tag, ["Личное", "Проект", "Идеи"], { include_blank: "Без категории" } %>
+        </div>
+
+        <div class="form-field">
+          <%= form.label :body, "Текст заметки" %>
+          <%= form.text_area :body %>
+        </div>
+
+        <!-- ВЫБОР ДЕЙСТВИЯ -->
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
+          <% if is_author || @note.shared_editing? %>
+            <%= form.submit "Обновить оригинал ♡", class: "button", style: "width: 100%;", name: "commit", value: "Обновить оригинал" %>
+          <% end %>
+          
+          <% if !is_author %>
+            <%= form.submit "Сохранить копию себе ♡", class: "button button-secondary", style: "width: 100%;", name: "commit", value: "Сохранить копию" %>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <!-- Гости: только чтение -->
+      <h1 style="margin: 8px 0 16px; font-size: 28px; color: var(--color-text);">
+        <%= @note.title %>
+      </h1>
+      <p style="color: var(--color-text-soft); font-size: 16px; line-height: 1.7; white-space: pre-line;">
+        <%= @note.body %>
+      </p>
+      <% if @note.tag.present? %>
+        <div class="note-preview-footer" style="margin-top: 24px; border-top: 1px solid var(--color-border); padding-top: 16px;">
+          <span class="note-tag"><%= @note.tag %></span>
+          <span>✿</span>
+        </div>
+      <% end %>
+      <p style="margin-top: 24px; text-align: center;">
+        <%= link_to "Войти, чтобы сохранить заметку", login_path, class: "button" %>
+      </p>
+    <% end %>
+
+    <p style="margin-top: 32px; font-size: 13px; color: #b09c9f; text-align: center;">
+      Поделился пользователь <%= @note.user.name %>
+    </p>
+
+    <!-- Кнопка возврата на главную -->
+    <div style="margin-top: 24px; text-align: center; border-top: 1px solid var(--color-border); padding-top: 20px;">
+      <%= link_to "← Вернуться на главную", root_path, class: "button button-secondary", style: "text-decoration: none; font-size: 14px; padding: 10px 20px;" %>
+    </div>
+
+  </section>
+</div>

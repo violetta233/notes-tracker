@@ -1,0 +1,60 @@
+<div class="auth-page">
+  <div class="flower flower-one">✿</div>
+  <div class="flower flower-two">❀</div>
+  <div class="flower flower-three">✿</div>
+
+  <section class="card auth-card">
+    <div class="auth-decoration">✏️</div>
+
+    <h1>Редактировать заметку</h1>
+
+    <p class="auth-subtitle">
+      Обнови свои мысли или исправь ошибку
+    </p>
+
+    <% if @note.errors.any? %>
+      <div class="error-message">
+        <strong>Проверь данные:</strong>
+        <ul>
+          <% @note.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_with model: @note, class: "auth-form" do |form| %>
+      <div class="form-field">
+        <%= form.label :title, "Заголовок" %>
+        <%= form.text_field :title, placeholder: "Например: Идеи для проекта" %>
+      </div>
+
+      <div class="form-field">
+        <%= form.label :tag, "Категория" %>
+        <%= form.select :tag, ["Личное", "Проект", "Идеи"], { include_blank: "Без категории" } %>
+      </div>
+
+      <div class="form-field">
+        <%= form.label :body, "Текст заметки" %>
+        <%= form.text_area :body, placeholder: "Начни писать..." %>
+      </div>
+
+      <div class="form-field" style="display: flex; align-items: flex-start; gap: 12px; background: #fffafa; padding: 16px; border: 1px solid var(--color-border); border-radius: var(--radius-input); margin-bottom: 24px;">
+        <%= form.check_box :shared_editing, style: "margin-top: 3px; width: 18px; height: 18px; accent-color: var(--color-primary); cursor: pointer;" %>
+        
+        <div style="flex: 1;">
+          <%= form.label :shared_editing, "Разрешить другим редактировать оригинал", style: "margin-bottom: 4px; display: block; cursor: pointer; font-weight: 600; color: var(--color-text); font-size: 14px;" %>
+          <span style="font-size: 12px; color: var(--color-text-soft); line-height: 1.4; display: block;">
+            Если выключено, другие смогут только сохранить копию себе.
+          </span>
+        </div>
+      </div>
+
+      <%= form.submit "Сохранить изменения ♡", class: "button auth-button" %>
+    <% end %>
+
+    <p class="auth-footer">
+      <%= link_to "← Назад", notes_path %>
+    </p>
+  </section>
+</div>

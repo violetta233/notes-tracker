@@ -64,29 +64,58 @@
         const btnConfirm = document.getElementById("dialog-confirm");
         const btnCancel = document.getElementById("dialog-cancel");
 
-        // Перехватываем отправку форм с data-turbo-confirm
         document.addEventListener("submit", (e) => {
           const confirmMessage = e.target.dataset.turboConfirm;
           if (confirmMessage) {
-            e.preventDefault(); // Останавливаем отправку
+            e.preventDefault();
             message.textContent = confirmMessage;
-            dialog.showModal(); // Показываем окно
+            dialog.showModal();
 
             // Если нажали "Удалить"
             btnConfirm.onclick = () => {
               dialog.close();
-              e.target.submit(); // Отправляем форму
+              e.target.submit();
             };
           }
         });
 
-        // Если нажали "Отмена" или кликнули мимо окна
         btnCancel.onclick = () => dialog.close();
         dialog.addEventListener("click", (e) => {
           const rect = dialog.getBoundingClientRect();
           if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
             dialog.close();
           }
+        });
+      });
+    </script>
+
+    <!-- СКРИПТ ДЛЯ WEB SHARE API (Поделиться в ТГ, ВК и т.д.) -->
+    <script>
+      document.addEventListener("turbo:load", () => {
+        document.querySelectorAll(".share-btn").forEach(button => {
+          button.addEventListener("click", async (e) => {
+            e.preventDefault();
+            const url = button.dataset.url;
+            const title = button.dataset.title || "Заметка из Трекера";
+
+            if (navigator.share) {
+              try {
+                await navigator.share({
+                  title: title,
+                  text: "Посмотри мою заметку:",
+                  url: url,
+                });
+              } catch (err) {
+                console.log("Ошибка при отправке:", err);
+              }
+            } else {
+              navigator.clipboard.writeText(url).then(() => {
+                alert("Ссылка скопирована в буфер обмена!");
+              }).catch(err => {
+                prompt("Скопируйте ссылку вручную:", url);
+              });
+            }
+          });
         });
       });
     </script>

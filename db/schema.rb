@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_26_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_23_205007) do
   create_table "habits", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
@@ -24,10 +24,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_26_120000) do
   create_table "notes", force: :cascade do |t|
     t.text "body", null: false
     t.datetime "created_at", null: false
+    t.string "share_token"
+    t.boolean "shared_editing"
+    t.integer "source_note_id"
     t.string "tag"
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
+    t.index ["share_token"], name: "index_notes_on_share_token", unique: true
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
