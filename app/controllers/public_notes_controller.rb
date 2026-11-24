@@ -3,23 +3,28 @@ class PublicNotesController < ApplicationController
   before_action :set_note, only: [ :show, :update ]
 
   def show
-    # Если это чужая заметка, передаем имя автора для приписки
     @shared_with_name = @note.user.name if current_user && @note.user != current_user
   end
 
   def update
     if current_user
-      if @note.can_be_edited_by?(current_user) && params[:commit] == "Обновить оригинал"
-        # Обновляем оригинал (если автор или разрешено)
+      # Если нажали "Сохранить копию" — добавляем в соавторы и шлем на главную
+      if params[:commit] == "Сохранить копию"
+        @note.add_collaborator(current_user)
+        @note.update(note_params)
+        redirect_to root_path, notice: "Заметка добавлена в ваш список (совместный доступ)!"
+
+      # Если нажали "Обновить оригинал" — обновляем и остаемся на странице
+      elsif @note.can_be_edited_by?(current_user)
         if @note.update(note_params)
-          redirect_to public_note_path(@note.share_token), notice: "Оригинал заметки обновлен!"
+          redirect_to public_note_path(@note.share_token), notice: "Заметка обновлена!"
         else
           render :show, status: :unprocessable_entity
         end
       else
-        # Создаем копию для текущего пользователя
-        @note.copy_to!(current_user, note_params)
-        redirect_to notes_path, notice: "Заметка сохранена в вашем списке!"
+        @note.add_collaborator(current_user)
+        @note.update(note_params)
+        redirect_to root_path, notice: "Заметка добавлена в ваш список!"
       end
     else
       redirect_to login_path, alert: "Войдите, чтобы сохранить заметку"

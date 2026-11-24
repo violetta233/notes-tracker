@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_23_205007) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_24_151227) do
   create_table "habits", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
@@ -21,8 +21,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_23_205007) do
     t.index ["user_id"], name: "index_habits_on_user_id"
   end
 
+  create_table "note_shares", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "note_id", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["note_id"], name: "index_note_shares_on_note_id"
+    t.index ["user_id"], name: "index_note_shares_on_user_id"
+  end
+
   create_table "notes", force: :cascade do |t|
     t.text "body", null: false
+    t.text "collaborator_ids"
     t.datetime "created_at", null: false
     t.string "share_token"
     t.boolean "shared_editing"
@@ -44,5 +54,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_23_205007) do
   end
 
   add_foreign_key "habits", "users"
+  add_foreign_key "note_shares", "notes"
+  add_foreign_key "note_shares", "users"
   add_foreign_key "notes", "users"
 end

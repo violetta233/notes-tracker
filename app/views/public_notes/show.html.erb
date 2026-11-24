@@ -24,7 +24,7 @@
     <% if current_user %>
       <% is_author = @note.user == current_user %>
       
-      <%= form_with model: @note, url: public_note_path(@note.share_token), method: :patch, class: "auth-form" do |form| %>
+      <%= form_with model: @note, url: public_note_path(@note.share_token), method: :patch, class: "auth-form", data: { turbo: false } do |form| %>
         <div class="form-field">
           <%= form.label :title, "Заголовок" %>
           <%= form.text_field :title %>

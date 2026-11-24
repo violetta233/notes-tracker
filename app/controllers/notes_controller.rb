@@ -3,7 +3,8 @@ class NotesController < ApplicationController
   before_action :set_note, only: [ :destroy, :share, :revoke, :edit, :update ]
 
   def index
-    @notes = current_user.notes.order(created_at: :desc)
+    # Показываем свои заметки И те, где мы в соавторах
+    @notes = Note.available_to(current_user).order(created_at: :desc)
   end
 
   def new
@@ -30,9 +31,13 @@ class NotesController < ApplicationController
     end
   end
 
-  def destroy
-    @note.destroy
-    redirect_back fallback_location: root_path, notice: "Заметка удалена!"
+    def destroy
+    if @note.user == current_user
+      @note.destroy
+      redirect_back fallback_location: root_path, notice: "Заметка удалена!"
+    else
+      redirect_back fallback_location: root_path, alert: "Удалять заметку может только автор."
+    end
   end
 
   def share
@@ -48,7 +53,7 @@ class NotesController < ApplicationController
   private
 
   def set_note
-    @note = current_user.notes.find(params[:id])
+    @note = Note.available_to(current_user).find(params[:id])
   end
 
   def note_params

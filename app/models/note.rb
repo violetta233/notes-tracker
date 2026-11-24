@@ -1,10 +1,8 @@
 class Note < ApplicationRecord
   belongs_to :user
-
   belongs_to :source_note, class_name: "Note", optional: true
   has_many :copies, class_name: "Note", foreign_key: "source_note_id", dependent: :nullify
 
-  # Автогенерация токена при создании
   before_create :generate_share_token
 
   validates :title, presence: true, length: { maximum: 100 }
@@ -13,7 +11,11 @@ class Note < ApplicationRecord
 
   scope :recent, -> { order(created_at: :desc) }
 
-  # ФИЧА SHARE
+  # Заметки, доступные пользователю (свои + те, где он в списке соавторов)
+  scope :available_to, ->(user) {
+    where("user_id = :id OR collaborator_ids LIKE :pattern", id: user.id, pattern: "%#{user.id}%")
+  }
+
   def shared?
     share_token.present?
   end
@@ -26,20 +28,22 @@ class Note < ApplicationRecord
     update!(share_token: nil)
   end
 
-  def can_be_edited_by?(user)
-    user == self.user || shared_editing?
+  # Добавляем пользователя в соавторы
+  def add_collaborator(user)
+    current_ids = collaborator_ids.present? ? collaborator_ids.split(",").map(&:to_i) : []
+    unless current_ids.include?(user.id)
+      current_ids << user.id
+      update!(collaborator_ids: current_ids.join(","))
+    end
   end
 
-  # Копирование чужой заметки к себе
-  def copy_to!(new_user, overrides = {})
-    new_user.notes.create!(
-      title: "#{title} (копия)",
-      body: body,
-      tag: tag,
-      source_note_id: id
-    ).tap do |copy|
-      copy.update(overrides.to_h) if overrides.present?
-    end
+  # Проверка прав на редактирование
+  def can_be_edited_by?(user)
+    return true if user == self.user
+    return true if shared_editing?
+
+    current_ids = collaborator_ids.present? ? collaborator_ids.split(",").map(&:to_i) : []
+    current_ids.include?(user.id)
   end
 
   private

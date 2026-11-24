@@ -13,10 +13,10 @@
             <span class="note-date" style="color: #b09c9f; font-size: 13px;"><%= note.created_at.strftime("%d.%m.%Y") %></span>
             
             <div style="display: flex; gap: 6px; align-items: center;">
-              <!-- Редактировать -->
+              <!-- Кнопка Редактировать -->
               <%= link_to "✏️", edit_note_path(note), class: "button button-secondary", style: "padding: 4px 8px; font-size: 12px; text-decoration: none;" %>
 
-              <!-- Поделиться -->
+              <!-- Кнопка Поделиться -->
               <button type="button" class="button share-btn" 
                       data-url="<%= public_note_url(note.share_token) %>" 
                       data-title="<%= note.title %>"
@@ -24,14 +24,17 @@
                 Поделиться
               </button>
 
-              <!-- Удалить -->
-              <%= button_to "🗑", note_path(note), method: :delete, class: "delete-btn", form: { data: { turbo_confirm: "Удалить заметку?" }, style: "display: inline;" }, style: "background: none; border: none; cursor: pointer; font-size: 16px;" %>
+              <!-- Кнопка Удалить (только для автора) -->
+              <% if note.user == current_user %>
+                <%= button_to "🗑", note_path(note), method: :delete, class: "delete-btn", form: { data: { turbo_confirm: "Удалить заметку?" }, style: "display: inline;" }, style: "background: none; border: none; cursor: pointer; font-size: 16px;" %>
+              <% end %>
             </div>
           </div>
 
-          <% if note.source_note_id.present? && note.source_note %>
+          <!-- Пометка, если заметка совместная -->
+          <% if note.user != current_user %>
             <div style="font-size: 11px; color: var(--color-primary-dark); font-weight: bold; margin-bottom: -5px;">
-              Совместно с: <%= note.source_note.user.name %>
+              Совместная заметка (автор: <%= note.user.name %>)
             </div>
           <% end %>
 

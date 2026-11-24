@@ -18,4 +18,5 @@ Rails.application.routes.draw do
   resources :habits, only: [ :index, :new, :create, :destroy ]
 
   get "s/:token", to: "public_notes#show", as: :public_note
+  patch "s/:token", to: "public_notes#update"
 end

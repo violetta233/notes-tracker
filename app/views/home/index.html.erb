@@ -28,7 +28,7 @@
     <%# Статистика %>
     <section class="stats-grid">
       <div class="stat-card card">
-        <div class="stat-value"><%= current_user.notes.count %></div>
+        <div class="stat-value"><%= Note.available_to(current_user).count %></div>
         <div class="stat-label">заметок</div>
       </div>
 
@@ -38,7 +38,7 @@
       </div>
 
       <div class="stat-card card">
-        <div class="stat-value"><%= current_user.notes.where(tag: "Идеи").count %></div>
+        <div class="stat-value"><%= Note.available_to(current_user).where(tag: "Идеи").count %></div>
         <div class="stat-label">идей</div>
       </div>
     </section>
@@ -71,18 +71,21 @@
                     Поделиться
                   </button>
 
-                   <!-- Кнопка удалить -->
-                  <%= button_to "🗑", note_path(note), method: :delete, class: "delete-btn", form: { data: { turbo_confirm: "Удалить заметку?" }, style: "display: inline;" }, style: "background: none; border: none; cursor: pointer; font-size: 16px;" %>
+                  <!-- Кнопка Удалить (только для автора) -->
+                  <% if note.user == current_user %>
+                    <%= button_to "🗑", note_path(note), method: :delete, class: "delete-btn", form: { data: { turbo_confirm: "Удалить заметку?" }, style: "display: inline;" }, style: "background: none; border: none; cursor: pointer; font-size: 16px;" %>
+                  <% end %>
                 </div>
               </div>
 
-              <!-- Пометка, если заметка скопирована -->
-              <% if note.source_note_id.present? && note.source_note %>
+              <!-- Пометка, если заметка совместная -->
+              <% if note.user != current_user %>
                 <div style="font-size: 11px; color: var(--color-primary-dark); font-weight: bold; margin-bottom: -5px;">
-                  Совместно с: <%= note.source_note.user.name %>
+                  Совместная заметка (автор: <%= note.user.name %>)
                 </div>
               <% end %>
 
+              <!-- Тело заметки -->
               <h3 class="note-title" style="margin: 0;"><%= note.title %></h3>
               <p class="note-excerpt-full" style="margin: 0; color: var(--color-text-soft); white-space: pre-line;"><%= note.body %></p>
               
@@ -138,7 +141,6 @@
     </section>
 
   <% else %>
-    <%# Пустое состояние — неавторизованный пользователь %>
     <section class="empty-notes card">
       <div class="empty-flower">🌷</div>
       <h2>Добро пожаловать в Трекер!</h2>
